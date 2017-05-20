@@ -1,0 +1,22 @@
+{% from "macros.html" import name_selecter with context %}
+{% extends "layout.html" %}
+{% block body %}
+    <form action="{{ url_for('add_archer') }}" method=get class=add-entry>
+      <dl>
+        <dd><input type=submit value="Add New Archer">
+      </dl>
+    </form>
+    <form action="{{ url_for('edit_details') }}" method=get class=add-entry>
+      <dl>
+        {{ name_selecter() }}
+        <dd><input type=submit value="Update Archer Details">
+      </dl>
+    </form>
+    <dl>
+    </dl>
+    <form action="{{ url_for('review') }}" method=get class=add-entry>
+      <dl>
+        <dd><input type=submit value="Review">
+      </dl>
+    </form>
+{% endblock %}

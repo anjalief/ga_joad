@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+<div>
+  <script type="text/javascript" src="{{ url_for('static', filename='add_archer.js') }}"></script>
+
+  <!-- TODO: don't pass giant string dict? -->
+  <!-- TODO: don't hardcode sql indices? -->
+  <form action="{{ url_for('add_archer') }}" method=post
+  onsubmit="return confirm('Are you certain you wish to proceed? Archer info is NOT editable');">
+    <dl>
+      <br>
+      First Name:
+      <input type=text name=firstname id=firstname>
+      </div>
+      <br>
+      <div>
+      Last Name:
+      <input type=text name=lastname id=lastname>
+      </div>
+      <br>
+      <div>
+      Birth Year:
+      <input type=number name=byear id=byear>
+      </div>
+      <br>
+      <select name=gender id=gender>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+      </div>
+      <br>
+      <!-- TODO: data sanitation -->
+      <dd><input type=submit value=Enter>
+    </dl>
+  </form>
+</div>
+{% endblock %}

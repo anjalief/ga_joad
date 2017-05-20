@@ -1,0 +1,70 @@
+{% from "macros.html" import day_selecter, distance_selecter with context %}
+{% extends "layout.html" %}
+{% block body %}
+<div>
+  <script type="text/javascript" src="{{ url_for('static', filename='edit_details.js') }}"></script>
+
+  <!-- TODO: don't pass giant string dict? -->
+  <!-- TODO: don't hardcode sql indices? -->
+  <form action="{{ url_for('edit_details') }}" method=post>
+    <input type=hidden value={{ archer_details.id }} name=id>
+    <dl>
+      <h3> {{ archer_details.firstname }} {{ archer_details.lastname }} </h3>
+      <br>
+      <br>
+
+      <div>
+      Primary Discipline:
+      <select name=discipline id=discipline>
+        <option value="Compound">Compound</option>
+        <option value="Recurve">Recurve</option>
+        <option value="Barebow">Barebow</option>
+      </select>
+      </div>
+      <br>
+
+      <div>
+        Owns Equipment?
+      {%if archer_details.owns_equipment %}
+      <input type="checkbox" name=owns_equipment id=owns_equipment checked>
+      {% else %}
+      <input type="checkbox" name=owns_equipment id=owns_equipment>
+      {% endif %}
+      </div>
+      <br>
+
+      <div>
+      Draw weight:
+      <input type=number name=draw_weight id=draw_weight value={{ archer_details.draw_weight }}>lbs
+      </div>
+      <br>
+
+      <div>
+      Draw length:
+      <input type=number name=draw_length id=draw_length value={{ archer_details.draw_length }}>
+      </div>
+      <br>
+
+      <div>
+      Equipment Description:
+      <textarea name=equipment_description id=equipment_description>{{ archer_details.equipment_description }}</textarea>
+      </div>
+      <br>
+
+      <div>
+      Normal Distance:
+      {{ distance_selecter() }}
+      </div>
+      <br>
+
+      <div>
+      Primary Day:
+      {{ day_selecter() }}
+      </div>
+      <br>
+
+      <dd><input type=submit value=Enter>
+    </dl>
+  </form>
+</div>
+{% endblock %}

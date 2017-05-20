@@ -1,0 +1,29 @@
+<!-- Select archer from dropdown, keyed on id -->
+{% macro name_selecter() %}
+<select name=name_selecter id=name_selecter>
+{% for entry in archer_list %}
+<option value={{ entry[0] }}>{{ entry[0] }} {{ entry[1] }} {{ entry[2] }}</option>
+{% endfor %}
+</select>
+{% endmacro %}
+
+{% macro day_selecter() %}
+<select name=day_selecter id=day_selecter>
+  <option value="Sunday">Sunday</option>
+  <option value="Monday">Monday</option>
+  <option value="Tuesday">Tuesday</option>
+  <option value="Wednesday">Wednesday</option>
+  <option value="Thursday">Thursday</option>
+  <option value="Friday">Friday</option>
+  <option value="Saturday">Saturday</option>
+</select>
+{% endmacro %}
+
+{% macro distance_selecter() %}
+<select name=distance_selecter id=distance_selecter>
+  <option value="5">5</option>
+  <option value="10">10</option>
+  <option value="15">15</option>
+  <option value="20">20</option>
+</select>
+{% endmacro %}

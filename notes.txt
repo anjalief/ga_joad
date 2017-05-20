@@ -1,0 +1,19 @@
+GENERAL TODOS:
+ - db rows that don't need indexing and can be json dumped
+ 
+
+- date - master
+- name - profile
+- discipline - profile
+- draw weight - profile
+- distance - master
+- target size - master
+- tournament - master
+- score - none
+- out of how many arrows - master
+- notes - none
+
+
+DEPENDENCIES
+- flask
+- json
