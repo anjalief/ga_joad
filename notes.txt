@@ -1,6 +1,6 @@
 GENERAL TODOS:
  - db rows that don't need indexing and can be json dumped
- 
+
 
 - date - master
 - name - profile
@@ -17,3 +17,11 @@ GENERAL TODOS:
 DEPENDENCIES
 - flask
 - json
+
+
+Collin questions:
+- passing variables (jquery in template?)
+- loading things at start
+- testing framework? tests for javascript
+- forms?
+- creating things in html vs. javascript

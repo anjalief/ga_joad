@@ -56,25 +56,5 @@ class GATestCase(unittest.TestCase):
         assert entries[0][3] == 2000, entries[0][3]
         assert entries[0][4] == "Male", entries[0][4]
 
-def test_add_archer_post(self):
-    rv = self.app.get('/edit_details)
-    # new archer should appear in drop down
-    assert "John Smith" in rv.data
-
-    query = """select id,
-                      firstname,
-                      lastname,
-                      byear,
-                      gender
-                      day
-                    from members"""
-    entries = self.execute_query(query)
-    assert len(entries) == 1
-    assert entries[0][0] == 1
-    assert entries[0][1] == "John", entries[0][1]
-    assert entries[0][2] == "Smith", entries[0][2]
-    assert entries[0][3] == 2000, entries[0][3]
-    assert entries[0][4] == "Male", entries[0][4]
-
 if __name__ == '__main__':
     unittest.main()

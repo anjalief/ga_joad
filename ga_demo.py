@@ -11,6 +11,7 @@ app.config.from_object(__name__) # load config from this file , flaskr.py
 # Load default config and override config from an environment variable
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'ga_demo.db'),
+    DEBUG=True,
     SECRET_KEY='development key'
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
@@ -36,10 +37,18 @@ def get_db():
         g.sqlite_db = connect_db()
     return g.sqlite_db
 
+# Called for testing
+def init_db():
+    """Initializes the database."""
+    db = get_db()
+    with app.open_resource('schema.sql', mode='r') as f:
+        db.cursor().executescript(f.read())
+    db.commit()
+
 def load_members_from_db(needs_reload=False):
     global archer_list
     global id_to_archer_details
-    # we've already loaded archers and don't think anything has change
+    # we've already loaded archers and don't think anything has changed
     if archer_list != [] and not needs_reload:
         return
     db = get_db()
@@ -118,8 +127,7 @@ def edit_details():
         archer_details = id_to_archer_details.get(
             int(request.args.get('name_selecter')), None)
         assert archer_details is not None
-        print archer_details.discipline, archer_details.draw_length, "DEETS", archer_details.owns_equipment
-        return render_template('edit_details.html', archer_details=archer_details)
+        return render_template('edit_details.html', archer_dict=archer_details.__dict__)
     else:
         query = """insert into member_details (id,
                                                discipline,
@@ -148,74 +156,10 @@ def edit_details():
         flash(flash_msg)
         return redirect(url_for('landing'))
 
-def unpack_multidict(mult_dict):
-    unpacked_dict = {}
-    for key in mult_dict:
-        # keys are formatted i.e. 2_discipline
-        # where 2 is the row number
-        id_topic = key.split('.')
-        assert len(id_topic) == 2
-        row_id = id_topic[0]
-        if not row_id in unpacked_dict:
-            unpacked_dict[row_id] = {}
-        unpacked_dict[row_id][id_topic[1]] = mult_dict[key]
-    return unpacked_dict
-
-def sql_null_format(input):
-    if input == "":
-        return "NULL"
-    else:
-        return "\'" + input + "\'"
-
-@app.route('/input_data', methods=['GET', 'POST'])
-def input_data():
-    if request.method == 'GET':
-        db = get_db()
-        cur = db.execute("""select id,
-                            firstname,
-                            lastname,
-                            discipline,
-                            day
-                            from members order by id desc""")
-        entries = cur.fetchall()
-        return render_template('input_data.html', entries=entries)
-    else:
-        query = """insert into member_data
-                (id, date, discipline, draweight, distance,
-                 targetsize, tournament, score, num_arrows, notes)
-                    values"""
-        unpacked_dict = unpack_multidict(request.form)
-        for key in unpacked_dict:
-            row = unpacked_dict[key]
-            id_split = row['name_selector'].split(' ')
-            if "tournament" in row:
-                is_tournament = "1"
-            else:
-                is_tournament = "0"
-            row_query = " ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}),".format(
-            id_split[0],
-            sql_null_format(row['date']),
-            sql_null_format(row['discipline']),
-            sql_null_format(row['dweight']),
-            sql_null_format(row['distance']),
-            sql_null_format(row['target_size']),
-            is_tournament,
-            sql_null_format(row['score']),
-            sql_null_format(row['num_arrows']),
-            sql_null_format(row['notes']))
-            query += row_query
-        flash_msg = 'Data was successfully added'
-        flash(flash_msg)
-        db = get_db()
-        # last character is an extra comma
-        cur = db.execute(query[:-1])
-        db.commit()
-        return redirect(url_for('landing'))
-
 @app.route('/review', methods=['GET', 'POST'])
 def review():
     return redirect(url_for('landing'))
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

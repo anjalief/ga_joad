@@ -2,14 +2,33 @@
 {% extends "layout.html" %}
 {% block body %}
 <div>
-  <script type="text/javascript" src="{{ url_for('static', filename='edit_details.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.2.1.js') }}"></script>
+  <script>
+  $(document).ready(function(){
+      var archer_details = {{ archer_dict|tojson }};
+      $("#id").val(archer_details.id);
 
-  <!-- TODO: don't pass giant string dict? -->
-  <!-- TODO: don't hardcode sql indices? -->
+      var name_header_str = "<h3> " + archer_details.firstname
+                            + " " + archer_details.lastname
+                            +  "</h3>"
+      $("#name_header").html(name_header_str);
+
+  	  $("#discipline").val(archer_details.discipline);
+      $("#owns_equipment").prop("checked", archer_details.owns_equipment);
+      $("#draw_weight").val(archer_details.draw_weight);
+      $("#draw_length").val(archer_details.draw_length);
+      $("#equipment_description").val(archer_details.equipment_description);
+
+      $("#distance_selecter").val(archer_details.distance);
+      $("#day_selecter").val(archer_details.joad_day);
+
+  });
+  </script>
   <form action="{{ url_for('edit_details') }}" method=post>
-    <input type=hidden value={{ archer_details.id }} name=id>
+    <input type=hidden name=id id=id>
     <dl>
-      <h3> {{ archer_details.firstname }} {{ archer_details.lastname }} </h3>
+      <div id=name_header>
+      </div>
       <br>
       <br>
 
@@ -25,29 +44,25 @@
 
       <div>
         Owns Equipment?
-      {%if archer_details.owns_equipment %}
-      <input type="checkbox" name=owns_equipment id=owns_equipment checked>
-      {% else %}
       <input type="checkbox" name=owns_equipment id=owns_equipment>
-      {% endif %}
       </div>
       <br>
 
       <div>
       Draw weight:
-      <input type=number name=draw_weight id=draw_weight value={{ archer_details.draw_weight }}>lbs
+      <input type=number name=draw_weight id=draw_weight>lbs
       </div>
       <br>
 
       <div>
       Draw length:
-      <input type=number name=draw_length id=draw_length value={{ archer_details.draw_length }}>
+      <input type=number name=draw_length id=draw_length>
       </div>
       <br>
 
       <div>
       Equipment Description:
-      <textarea name=equipment_description id=equipment_description>{{ archer_details.equipment_description }}</textarea>
+      <textarea name=equipment_description id=equipment_description></textarea>
       </div>
       <br>
 
