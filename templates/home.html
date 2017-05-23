@@ -9,14 +9,14 @@
     <form action="{{ url_for('edit_details') }}" method=get class=add-entry>
       <dl>
         {{ name_selecter() }}
-        <dd><input type=submit value="Update Archer Details">
-      </dl>
+        <input type=submit name=btn1 value="Update Archer Details">
+        </dl>
+
     </form>
-    <dl>
-    </dl>
-    <form action="{{ url_for('review') }}" method=get class=add-entry>
+    <form action="{{ url_for('review_individual') }}" method=get class=add-entry>
       <dl>
-        <dd><input type=submit value="Review">
+        {{ name_selecter() }}
+        <input type=submit value="Review">
       </dl>
     </form>
 {% endblock %}

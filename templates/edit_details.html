@@ -8,11 +8,6 @@
       var archer_details = {{ archer_dict|tojson }};
       $("#id").val(archer_details.id);
 
-      var name_header_str = "<h3> " + archer_details.firstname
-                            + " " + archer_details.lastname
-                            +  "</h3>"
-      $("#name_header").html(name_header_str);
-
   	  $("#discipline").val(archer_details.discipline);
       $("#owns_equipment").prop("checked", archer_details.owns_equipment);
       $("#draw_weight").val(archer_details.draw_weight);
@@ -27,12 +22,11 @@
   <form action="{{ url_for('edit_details') }}" method=post>
     <input type=hidden name=id id=id>
     <dl>
-      <div id=name_header>
+      <div id=name_header class=name_header>
+        {{ archer_dict['firstname'] }} {{ archer_dict['lastname'] }}
       </div>
-      <br>
-      <br>
 
-      <div>
+      <div class=details_display>
       Primary Discipline:
       <select name=discipline id=discipline>
         <option value="Compound">Compound</option>
@@ -40,43 +34,36 @@
         <option value="Barebow">Barebow</option>
       </select>
       </div>
-      <br>
 
-      <div>
+      <div class=details_display>
         Owns Equipment?
       <input type="checkbox" name=owns_equipment id=owns_equipment>
       </div>
-      <br>
 
-      <div>
+      <div class=details_display>
       Draw weight:
       <input type=number name=draw_weight id=draw_weight>lbs
       </div>
-      <br>
 
-      <div>
+      <div class=details_display>
       Draw length:
-      <input type=number name=draw_length id=draw_length>
+      <input type=number name=draw_length id=draw_length>"
       </div>
-      <br>
 
-      <div>
+      <div class=details_display>
       Equipment Description:
       <textarea name=equipment_description id=equipment_description></textarea>
       </div>
-      <br>
 
-      <div>
+      <div class=details_display>
       Normal Distance:
       {{ distance_selecter() }}
       </div>
-      <br>
 
-      <div>
+      <div class=details_display>
       Primary Day:
       {{ day_selecter() }}
       </div>
-      <br>
 
       <dd><input type=submit value=Enter>
     </dl>

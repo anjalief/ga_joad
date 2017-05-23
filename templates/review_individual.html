@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+<div>
+      <div id=name_header class=name_header style="margin-bottom:0em;">
+        {{ archer_dict['firstname'] }} {{ archer_dict['lastname'] }}
+        </div>
+      <div id=name_header class=category_header>
+        {{ archer_dict['gender'] }} {{ archer_dict['joad_age_class'] }} {{ archer_dict['discipline'] }}
+      </div>
+
+      <div class=details_display>
+        {% if archer_dict['owns_equipment'] == 1%}
+        Owns Equipment
+        {% else %}
+        Rents Equipment
+        {% endif %}
+      </div>
+
+      <div class=details_display>
+      Draw weight: {{ archer_dict['draw_weight'] }}
+      </div>
+
+      <div class=details_display>
+      Draw length: {{ archer_dict['draw_length'] }}
+      </div>
+
+      <div class=details_display>
+      Equipment Description: {{ archer_dict['equipment_description'] }}
+      </div>
+
+      <div class=details_display>
+      Normal Distance: {{ archer_dict['distance'] }}
+      </div>
+
+      <div class=details_display>
+      Primary Day: {{ archer_dict['joad_day']}}
+      </div>
+</div>
+{% endblock %}

@@ -156,9 +156,12 @@ def edit_details():
         flash(flash_msg)
         return redirect(url_for('landing'))
 
-@app.route('/review', methods=['GET', 'POST'])
-def review():
-    return redirect(url_for('landing'))
+@app.route('/review_individual', methods=['GET'])
+def review_individual():
+    archer_details = id_to_archer_details.get(
+        int(request.args.get('name_selecter')), None)
+    assert archer_details is not None
+    return render_template('review_individual.html', archer_dict=archer_details.__dict__)
 
 
 if __name__ == "__main__":
