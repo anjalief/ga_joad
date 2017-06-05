@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+<script type="text/javascript" src="{{ url_for('static', filename='jquery-3.2.1.js') }}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='attendance.js') }}"></script>
+<script type="text/javascript">
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  var $ARCHERS = {{ archer_list|tojson }};
+</script>
+
+<div class=basic_div>
+  <form id=reschedule_form action="{{ url_for('reschedule') }}" method=post>
+  </form>
+</div>
+
+<div id=extra_practice_div class=basic_div>
+  <form id=extra_practice_form action="{{ url_for('extra_practice') }}" method=post>
+  </form>
+</div>
+
+<div class=basic_div>
+  Date: <input type="text" id="datepicker" class="date_picker">
+  <input type=button value="Go!" id="go_btn">
+</div>
+
+<div class=basic_div>
+<form id=result_form action="{{ url_for('attendance') }}" method=post>
+<div id=display_result>
+</div>
+</form>
+</div>
+{% endblock %}
